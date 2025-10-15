@@ -137,9 +137,10 @@ export default function NewVehiclePage() {
 
       toast.success('Annonce créée')
       router.replace(`/voitures/${vehicle.slug}`)
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e)
-      toast.error(e?.message ?? 'Erreur')
+      const error = e as Error
+      toast.error(error?.message ?? 'Erreur')
     } finally {
       setSubmitting(false)
     }

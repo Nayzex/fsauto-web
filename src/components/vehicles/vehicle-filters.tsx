@@ -1,0 +1,203 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import type { Vehicle } from '@/lib/types/vehicle'
+import { X } from 'lucide-react'
+
+interface VehicleFiltersProps {
+  vehicles: Vehicle[]
+  onFilterChange: (filters: Record<string, string[] | number | string | undefined>) => void
+}
+
+export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps) {
+  const [filters, setFilters] = useState<Record<string, string[] | number | string | undefined>>({
+    marque: [],
+    carburant: [],
+    boite: [],
+    critair: [],
+    prix_min: '',
+    prix_max: '',
+    annee_min: '',
+    annee_max: '',
+  })
+
+  // Extract unique values
+  const uniqueMarques = Array.from(new Set(vehicles.map(v => v.marque))).sort()
+  const uniqueCarburants = Array.from(new Set(vehicles.map(v => v.carburant).filter(Boolean))).sort()
+  const uniqueBoites = Array.from(new Set(vehicles.map(v => v.boite).filter(Boolean))).sort()
+
+  const handleCheckboxChange = (category: string, value: string) => {
+    const currentValues = Array.isArray(filters[category]) ? filters[category] as string[] : []
+    const newValues = currentValues.includes(value)
+      ? currentValues.filter((v: string) => v !== value)
+      : [...currentValues, value]
+
+    const newFilters = { ...filters, [category]: newValues }
+    setFilters(newFilters)
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    const newFilters = { ...filters, [field]: value ? Number(value) : '' }
+    setFilters(newFilters)
+  }
+
+  const handleReset = () => {
+    const emptyFilters = {
+      marque: [],
+      carburant: [],
+      boite: [],
+      critair: [],
+      prix_min: '',
+      prix_max: '',
+      annee_min: '',
+      annee_max: '',
+    }
+    setFilters(emptyFilters)
+    onFilterChange(emptyFilters)
+  }
+
+  // Apply filters
+  useEffect(() => {
+    onFilterChange(filters)
+  }, [filters])
+
+  return (
+    <Card className="sticky top-20">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Filtres</CardTitle>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleReset}
+          className="h-8 px-2 text-xs"
+        >
+          <X className="h-4 w-4 mr-1" />
+          Réinitialiser
+        </Button>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Marque */}
+        {uniqueMarques.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-3">Marque</h3>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {uniqueMarques.map((marque) => (
+                <label key={marque} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Array.isArray(filters.marque) && filters.marque.includes(marque)}
+                    onChange={() => handleCheckboxChange('marque', marque)}
+                    className="rounded border-gray-300"
+                  />
+                  <span className="text-sm">{marque}</span>
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    ({vehicles.filter(v => v.marque === marque).length})
+                  </span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Prix */}
+        <div>
+          <h3 className="font-semibold mb-3">Prix</h3>
+          <div className="space-y-2">
+            <Input
+              type="number"
+              placeholder="Min"
+              value={filters.prix_min}
+              onChange={(e) => handleInputChange('prix_min', e.target.value)}
+            />
+            <Input
+              type="number"
+              placeholder="Max"
+              value={filters.prix_max}
+              onChange={(e) => handleInputChange('prix_max', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Année */}
+        <div>
+          <h3 className="font-semibold mb-3">Année</h3>
+          <div className="space-y-2">
+            <Input
+              type="number"
+              placeholder="Min"
+              value={filters.annee_min}
+              onChange={(e) => handleInputChange('annee_min', e.target.value)}
+            />
+            <Input
+              type="number"
+              placeholder="Max"
+              value={filters.annee_max}
+              onChange={(e) => handleInputChange('annee_max', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Carburant */}
+        {uniqueCarburants.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-3">Carburant</h3>
+            <div className="space-y-2">
+              {uniqueCarburants.map((carburant) => (
+                <label key={carburant} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Array.isArray(filters.carburant) && filters.carburant.includes(carburant as string)}
+                    onChange={() => handleCheckboxChange('carburant', carburant as string)}
+                    className="rounded border-gray-300"
+                  />
+                  <span className="text-sm">{carburant}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Boîte */}
+        {uniqueBoites.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-3">Boîte de vitesse</h3>
+            <div className="space-y-2">
+              {uniqueBoites.map((boite) => (
+                <label key={boite} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Array.isArray(filters.boite) && filters.boite.includes(boite as string)}
+                    onChange={() => handleCheckboxChange('boite', boite as string)}
+                    className="rounded border-gray-300"
+                  />
+                  <span className="text-sm">{boite}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Crit'Air */}
+        <div>
+          <h3 className="font-semibold mb-3">Crit'Air</h3>
+          <div className="space-y-2">
+            {[0, 1, 2, 3, 4, 5].map((critair) => (
+              <label key={critair} className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={Array.isArray(filters.critair) && filters.critair.includes(critair.toString())}
+                  onChange={() => handleCheckboxChange('critair', critair.toString())}
+                  className="rounded border-gray-300"
+                />
+                <span className="text-sm">Crit'Air {critair}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}

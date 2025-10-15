@@ -1,103 +1,229 @@
-import Image from "next/image";
+import { LinkButton } from '@/components/ui/link-button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { VehicleCard } from '@/components/vehicles/vehicle-card'
+import { getSupabaseServer } from '@/lib/supabaseServer'
+import type { Vehicle } from '@/lib/types/vehicle'
+import { ArrowRight, Wrench, RefreshCw, Shield, Star } from 'lucide-react'
 
-export default function Home() {
+export default async function HomePage() {
+  // Fetch recent vehicles
+  const supabase = getSupabaseServer()
+  const { data: vehicles } = await supabase
+    .from('vehicle')
+    .select('*, images:vehicle_image(*)')
+    .eq('statut', 'online')
+    .order('published_at', { ascending: false })
+    .limit(4)
+
+  const recentVehicles = (vehicles || []) as Vehicle[]
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-b from-black to-gray-900 text-white">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200')] bg-cover bg-center opacity-20" />
+        <div className="relative container mx-auto px-4 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Trouvez la voiture de vos rêves
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 text-gray-300">
+              Découvrez notre large sélection de véhicules d'occasion, rigoureusement sélectionnés et garantis pour votre tranquillité d'esprit.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <LinkButton href="/catalogue" size="lg" className="text-lg">
+                Consulter le catalogue
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </LinkButton>
+              <LinkButton href="/contact" size="lg" variant="outline" className="text-lg bg-white/10 hover:bg-white/20 text-white border-white/20">
+                Nous contacter
+              </LinkButton>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Des services adaptés à vos besoins
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Nous offrons une gamme complète de services pour vous accompagner dans l'achat et l'entretien de votre véhicule.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Service 1: Workshop */}
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Wrench className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle>Entretien et réparation</CardTitle>
+                <CardDescription>
+                  Nos techniciens qualifiés assurent l'entretien et la réparation de votre véhicule
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <LinkButton href="/services#entretien" variant="link" className="text-primary">
+                  En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
+                </LinkButton>
+              </CardContent>
+            </Card>
+
+            {/* Service 2: Trade-in */}
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <RefreshCw className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle>Reprise de votre véhicule</CardTitle>
+                <CardDescription>
+                  Nous offrons des valeurs de reprise compétitives pour faciliter l'acquisition de votre nouveau véhicule
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <LinkButton href="/reprise" variant="link" className="text-primary">
+                  Obtenir une estimation <ArrowRight className="ml-2 h-4 w-4" />
+                </LinkButton>
+              </CardContent>
+            </Card>
+
+            {/* Service 3: Warranty */}
+            <Card className="text-center hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Shield className="h-8 w-8 text-primary" />
+                </div>
+                <CardTitle>Garantie et financement</CardTitle>
+                <CardDescription>
+                  Profitez d'une garantie complète et de solutions de financement sur mesure adaptées à votre budget
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <LinkButton href="/financement" variant="link" className="text-primary">
+                  Découvrir nos offres <ArrowRight className="ml-2 h-4 w-4" />
+                </LinkButton>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ce que disent nos clients
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Testimonial 1 */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <CardTitle className="text-base">Sophie Martin</CardTitle>
+                <CardDescription>15/12/2023</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">
+                  "J'ai acheté ma voiture chez FSauto et je suis très satisfait du service. L'équipe est professionnelle et à l'écoute."
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Testimonial 2 */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(4)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                  <Star className="h-5 w-5 text-yellow-400" />
+                </div>
+                <CardTitle className="text-base">Jean Dubois</CardTitle>
+                <CardDescription>20/12/2023</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">
+                  "Bon accueil et large choix de véhicules. Le processus d'achat a été simple et rapide."
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Testimonial 3 */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <CardTitle className="text-base">Isabelle Leclerc</CardTitle>
+                <CardDescription>02/01/2024</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">
+                  "Excellent service, personnel compétent et sympathique. Je recommande vivement!"
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Vehicles Section */}
+      {recentVehicles.length > 0 && (
+        <section className="py-16 md:py-24 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="flex items-center justify-between mb-12">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Vendus récemment
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  Découvrez nos dernières annonces
+                </p>
+              </div>
+              <LinkButton href="/catalogue" variant="outline">
+                Voir tout le catalogue
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </LinkButton>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {recentVehicles.map((vehicle) => (
+                <VehicleCard key={vehicle.id} vehicle={vehicle} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Votre confiance, notre priorité
+          </h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto opacity-90">
+            Garantie jusqu'à 24 mois, reprise de votre ancien véhicule, financement LOA, et plus encore.
+          </p>
+          <LinkButton href="/contact" size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90">
+            En savoir plus
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </LinkButton>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
