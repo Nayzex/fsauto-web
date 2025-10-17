@@ -1,17 +1,12 @@
 import type { ReactNode } from 'react'
 import './globals.css'
-import { Toaster } from 'sonner'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
+import { Providers } from '@/components/providers'
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <body>
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
-        <Toaster richColors closeButton />
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

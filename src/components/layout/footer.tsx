@@ -6,7 +6,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-black text-white">
+    <footer className="border-t border-border bg-black dark:bg-gray-950 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Company info */}
@@ -17,7 +17,8 @@ export function Footer() {
                 alt="FSauto"
                 width={50}
                 height={33}
-                className="h-8 w-auto brightness-0 invert"
+                className="h-8 w-auto"
+                style={{ filter: 'brightness(0) saturate(100%) invert(1)' }}
               />
               <span className="text-lg font-bold">FSauto</span>
             </div>
@@ -101,7 +102,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-gray-400">
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span>123 Rue de Bourgogne<br />71600 Paray-le-Monial</span>
+                <span>9039 Bd du Champ Bossu<br />71600 Paray-le-Monial</span>
               </li>
               <li>
                 <a href="tel:0641164746" className="flex items-center gap-2 hover:text-white transition-colors">

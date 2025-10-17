@@ -9,14 +9,14 @@ export const metadata = {
 export default function CataloguePage() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
+      <div className="mb-8 animate-fade-in-down">
         <h1 className="text-4xl font-bold mb-4">Voitures d'occasion</h1>
         <p className="text-lg text-muted-foreground">
           Découvrez notre sélection de véhicules rigoureusement contrôlés et garantis
         </p>
       </div>
 
-      <Suspense fallback={<div className="py-12 text-center">Chargement...</div>}>
+      <Suspense fallback={<div className="py-12 text-center animate-fade-in">Chargement...</div>}>
         <VehicleCatalog />
       </Suspense>
     </div>

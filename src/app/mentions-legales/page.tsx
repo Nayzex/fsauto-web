@@ -6,10 +6,10 @@ export const metadata = {
 export default function MentionsLegalesPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold mb-8">Mentions légales</h1>
+      <h1 className="text-4xl font-bold mb-8 animate-fade-in-down">Mentions légales</h1>
 
       <div className="prose prose-neutral max-w-none space-y-8">
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">1. Informations légales</h2>
           <p className="text-muted-foreground mb-4">
             <strong>Raison sociale :</strong> FSauto - Garage de Bourgogne<br />
@@ -27,7 +27,7 @@ export default function MentionsLegalesPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-100">
           <h2 className="text-2xl font-semibold mb-4">2. Hébergement</h2>
           <p className="text-muted-foreground">
             <strong>Hébergeur :</strong> Vercel Inc.<br />
@@ -36,7 +36,7 @@ export default function MentionsLegalesPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-200">
           <h2 className="text-2xl font-semibold mb-4">3. Propriété intellectuelle</h2>
           <p className="text-muted-foreground mb-4">
             L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.
@@ -48,7 +48,7 @@ export default function MentionsLegalesPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-300">
           <h2 className="text-2xl font-semibold mb-4">4. Crédits</h2>
           <p className="text-muted-foreground">
             <strong>Conception et développement :</strong> FSauto<br />
@@ -56,7 +56,7 @@ export default function MentionsLegalesPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-400">
           <h2 className="text-2xl font-semibold mb-4">5. Liens hypertextes</h2>
           <p className="text-muted-foreground">
             Les liens hypertextes mis en place dans le cadre du présent site internet en direction d'autres ressources
@@ -64,7 +64,7 @@ export default function MentionsLegalesPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-500">
           <h2 className="text-2xl font-semibold mb-4">6. Limitation de responsabilité</h2>
           <p className="text-muted-foreground">
             FSauto ne pourra être tenu responsable des dommages directs et indirects causés au matériel de l'utilisateur,

@@ -56,7 +56,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Back button */}
-      <LinkButton href="/catalogue" variant="ghost" className="mb-6">
+      <LinkButton href="/catalogue" variant="ghost" className="mb-6 animate-fade-in">
         <ChevronLeft className="h-4 w-4 mr-2" />
         Retour au catalogue
       </LinkButton>
@@ -65,14 +65,16 @@ export default async function VehicleDetailPage({ params }: PageProps) {
         {/* Left column: Gallery and details */}
         <div className="lg:col-span-2 space-y-8">
           {/* Gallery */}
-          <VehicleGallery
-            images={vehicleData.images || []}
-            alt={vehicleTitle}
-          />
+          <div className="animate-slide-in-left">
+            <VehicleGallery
+              images={vehicleData.images || []}
+              alt={vehicleTitle}
+            />
+          </div>
 
           {/* Description */}
           {vehicleData.description && (
-            <Card>
+            <Card className="animate-fade-in-up hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle>Description</CardTitle>
               </CardHeader>
@@ -83,11 +85,13 @@ export default async function VehicleDetailPage({ params }: PageProps) {
           )}
 
           {/* Specs */}
-          <VehicleSpecs vehicle={vehicleData} />
+          <div className="animate-fade-in-up animate-delay-100">
+            <VehicleSpecs vehicle={vehicleData} />
+          </div>
 
           {/* Options */}
           {vehicleData.options && vehicleData.options.length > 0 && (
-            <Card>
+            <Card className="animate-fade-in-up animate-delay-200 hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle>Options et équipements</CardTitle>
               </CardHeader>
@@ -106,7 +110,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
 
           {/* Maintenance history */}
           {vehicleData.historique_entretien && (
-            <Card>
+            <Card className="animate-fade-in-up animate-delay-300 hover:shadow-xl transition-all duration-300">
               <CardHeader>
                 <CardTitle>Historique d'entretien</CardTitle>
               </CardHeader>
@@ -120,7 +124,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
         {/* Right column: Price and actions */}
         <div className="space-y-6">
           {/* Price card */}
-          <Card className="sticky top-20">
+          <Card className="animate-slide-in-right hover:shadow-2xl transition-all duration-300">
             <CardHeader>
               <div className="space-y-2">
                 <h1 className="text-2xl font-bold">{vehicleTitle}</h1>
@@ -170,7 +174,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
           </Card>
 
           {/* Contact form */}
-          <Card id="contact-form">
+          <Card id="contact-form" className="animate-scale-in animate-delay-100 hover:shadow-2xl transition-all duration-300">
             <CardHeader>
               <CardTitle>Contactez-nous</CardTitle>
             </CardHeader>
@@ -220,8 +224,9 @@ export default async function VehicleDetailPage({ params }: PageProps) {
                     placeholder="J'accepte de recevoir des offres et informations de FSauto."
                   />
                 </div>
-                <Button type="submit" className="w-full">
-                  Envoyer
+                <Button type="submit" className="w-full relative overflow-hidden group hover:shadow-lg hover:shadow-primary/50 transition-all">
+                  <span className="relative z-10">Envoyer</span>
+                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                 </Button>
               </form>
             </CardContent>
@@ -231,7 +236,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
 
       {/* Similar vehicles */}
       {similar.length > 0 && (
-        <section className="mt-16">
+        <section className="mt-16 animate-fade-in">
           <h2 className="text-3xl font-bold mb-8">Véhicules similaires</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {similar.map((vehicle) => (

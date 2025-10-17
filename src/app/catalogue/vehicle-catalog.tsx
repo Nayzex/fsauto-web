@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { VehicleCard } from '@/components/vehicles/vehicle-card'
 import { VehicleFilters } from '@/components/vehicles/vehicle-filters'
 import { Select } from '@/components/ui/select'
@@ -12,6 +13,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 const ITEMS_PER_PAGE = 12
 
 export function VehicleCatalog() {
+  const searchParams = useSearchParams()
+  const searchQuery = searchParams.get('search')
+
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([])
   const [loading, setLoading] = useState(true)
@@ -29,20 +33,28 @@ export function VehicleCatalog() {
           .eq('statut', 'online')
           .order('published_at', { ascending: false })
 
-        if (error) throw error
+        if (error) {
+          console.error('Erreur Supabase:', error)
+          throw error
+        }
 
+        console.log('Véhicules récupérés:', data?.length || 0)
         const vehiclesData = (data || []) as Vehicle[]
         setVehicles(vehiclesData)
         setFilteredVehicles(vehiclesData)
       } catch (error) {
-        console.error('Error fetching vehicles:', error)
+        console.error('Erreur lors du chargement des véhicules:', error)
+        console.warn('Aucun véhicule trouvé. Assurez-vous que votre base de données Supabase est configurée.')
+        // Set empty arrays to avoid breaking the UI
+        setVehicles([])
+        setFilteredVehicles([])
       } finally {
         setLoading(false)
       }
     }
 
     fetchVehicles()
-  }, [])
+  }, [searchQuery])
 
   // Sort vehicles
   useEffect(() => {
@@ -81,12 +93,25 @@ export function VehicleCatalog() {
       filtered = filtered.filter(v => (filters.marque as string[]).includes(v.marque))
     }
 
+    // Filter by modele
+    if (Array.isArray(filters.modele) && filters.modele.length > 0) {
+      filtered = filtered.filter(v => (filters.modele as string[]).includes(v.modele))
+    }
+
     // Filter by prix
     if (typeof filters.prix_min === 'number') {
       filtered = filtered.filter(v => v.prix >= (filters.prix_min as number))
     }
     if (typeof filters.prix_max === 'number') {
       filtered = filtered.filter(v => v.prix <= (filters.prix_max as number))
+    }
+
+    // Filter by kilométrage
+    if (typeof filters.km_min === 'number') {
+      filtered = filtered.filter(v => v.kilometrage >= (filters.km_min as number))
+    }
+    if (typeof filters.km_max === 'number') {
+      filtered = filtered.filter(v => v.kilometrage <= (filters.km_max as number))
     }
 
     // Filter by année
@@ -137,6 +162,7 @@ export function VehicleCatalog() {
         <VehicleFilters
           vehicles={vehicles}
           onFilterChange={handleFilterChange}
+          initialSearch={searchQuery}
         />
       </aside>
 
@@ -144,9 +170,16 @@ export function VehicleCatalog() {
       <div className="flex-1">
         {/* Sort and results count */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <p className="text-muted-foreground">
-            {filteredVehicles.length} résultat{filteredVehicles.length > 1 ? 's' : ''}
-          </p>
+          <div>
+            <p className="text-muted-foreground">
+              {filteredVehicles.length} résultat{filteredVehicles.length > 1 ? 's' : ''}
+            </p>
+            {searchQuery && (
+              <p className="text-sm text-primary mt-1">
+                Recherche : "{searchQuery}"
+              </p>
+            )}
+          </div>
 
           <div className="flex items-center gap-2">
             <label htmlFor="sort" className="text-sm font-medium">

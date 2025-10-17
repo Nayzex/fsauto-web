@@ -6,10 +6,10 @@ export const metadata = {
 export default function RGPDPage() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="text-4xl font-bold mb-8">Politique de confidentialité (RGPD)</h1>
+      <h1 className="text-4xl font-bold mb-8 animate-fade-in-down">Politique de confidentialité (RGPD)</h1>
 
       <div className="prose prose-neutral max-w-none space-y-8">
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p className="text-muted-foreground">
             FSauto s'engage à protéger la vie privée de ses utilisateurs. Cette politique de confidentialité explique
@@ -18,7 +18,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-100">
           <h2 className="text-2xl font-semibold mb-4">2. Responsable du traitement</h2>
           <p className="text-muted-foreground">
             <strong>Responsable du traitement :</strong> FSauto - Garage de Bourgogne<br />
@@ -28,7 +28,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-200">
           <h2 className="text-2xl font-semibold mb-4">3. Données collectées</h2>
           <p className="text-muted-foreground mb-4">
             Nous collectons les données personnelles suivantes :
@@ -43,7 +43,7 @@ export default function RGPDPage() {
           </ul>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-300">
           <h2 className="text-2xl font-semibold mb-4">4. Finalités du traitement</h2>
           <p className="text-muted-foreground mb-4">
             Vos données personnelles sont utilisées pour :
@@ -58,7 +58,7 @@ export default function RGPDPage() {
           </ul>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-400">
           <h2 className="text-2xl font-semibold mb-4">5. Base légale du traitement</h2>
           <p className="text-muted-foreground">
             Le traitement de vos données personnelles repose sur :
@@ -71,7 +71,7 @@ export default function RGPDPage() {
           </ul>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up animate-delay-500">
           <h2 className="text-2xl font-semibold mb-4">6. Durée de conservation</h2>
           <p className="text-muted-foreground">
             Vos données personnelles sont conservées pendant une durée n'excédant pas celle nécessaire aux finalités
@@ -84,7 +84,7 @@ export default function RGPDPage() {
           </ul>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">7. Vos droits</h2>
           <p className="text-muted-foreground mb-4">
             Conformément au RGPD, vous disposez des droits suivants :
@@ -103,7 +103,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">8. Sécurité des données</h2>
           <p className="text-muted-foreground">
             Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données
@@ -111,7 +111,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">9. Cookies</h2>
           <p className="text-muted-foreground mb-4">
             Notre site utilise des cookies pour améliorer votre expérience de navigation. Vous pouvez gérer vos
@@ -123,7 +123,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">10. Réclamation</h2>
           <p className="text-muted-foreground">
             Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de la CNIL :
@@ -137,7 +137,7 @@ export default function RGPDPage() {
           </p>
         </section>
 
-        <section>
+        <section className="animate-fade-in-up">
           <h2 className="text-2xl font-semibold mb-4">11. Modifications</h2>
           <p className="text-muted-foreground">
             Nous nous réservons le droit de modifier cette politique de confidentialité à tout moment. La version

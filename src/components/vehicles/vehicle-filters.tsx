@@ -10,11 +10,13 @@ import { X } from 'lucide-react'
 interface VehicleFiltersProps {
   vehicles: Vehicle[]
   onFilterChange: (filters: Record<string, string[] | number | string | undefined>) => void
+  initialSearch?: string | null
 }
 
-export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps) {
+export function VehicleFilters({ vehicles, onFilterChange, initialSearch }: VehicleFiltersProps) {
   const [filters, setFilters] = useState<Record<string, string[] | number | string | undefined>>({
     marque: [],
+    modele: [],
     carburant: [],
     boite: [],
     critair: [],
@@ -22,12 +24,41 @@ export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps
     prix_max: '',
     annee_min: '',
     annee_max: '',
+    km_min: '',
+    km_max: '',
   })
+
+  const [searchApplied, setSearchApplied] = useState(false)
+
+  // Appliquer automatiquement le filtre si on a une recherche
+  useEffect(() => {
+    if (initialSearch && vehicles.length > 0 && !searchApplied) {
+      const searchLower = initialSearch.toLowerCase()
+      const uniqueMarques = Array.from(new Set(vehicles.map(v => v.marque)))
+      const matchingMarque = uniqueMarques.find(m => m.toLowerCase() === searchLower)
+
+      if (matchingMarque) {
+        const newFilters = { ...filters, marque: [matchingMarque] }
+        setFilters(newFilters)
+        setSearchApplied(true)
+      }
+    }
+  }, [initialSearch, vehicles, searchApplied])
 
   // Extract unique values
   const uniqueMarques = Array.from(new Set(vehicles.map(v => v.marque))).sort()
   const uniqueCarburants = Array.from(new Set(vehicles.map(v => v.carburant).filter(Boolean))).sort()
   const uniqueBoites = Array.from(new Set(vehicles.map(v => v.boite).filter(Boolean))).sort()
+
+  // Get modeles based on selected marques
+  const availableModeles = vehicles
+    .filter(v =>
+      !Array.isArray(filters.marque) ||
+      filters.marque.length === 0 ||
+      filters.marque.includes(v.marque)
+    )
+    .map(v => v.modele)
+  const uniqueModeles = Array.from(new Set(availableModeles)).sort()
 
   const handleCheckboxChange = (category: string, value: string) => {
     const currentValues = Array.isArray(filters[category]) ? filters[category] as string[] : []
@@ -47,6 +78,7 @@ export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps
   const handleReset = () => {
     const emptyFilters = {
       marque: [],
+      modele: [],
       carburant: [],
       boite: [],
       critair: [],
@@ -54,6 +86,8 @@ export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps
       prix_max: '',
       annee_min: '',
       annee_max: '',
+      km_min: '',
+      km_max: '',
     }
     setFilters(emptyFilters)
     onFilterChange(emptyFilters)
@@ -102,6 +136,26 @@ export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps
           </div>
         )}
 
+        {/* Modèle */}
+        {uniqueModeles.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-3">Modèle</h3>
+            <div className="space-y-2 max-h-48 overflow-y-auto">
+              {uniqueModeles.map((modele) => (
+                <label key={modele} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={Array.isArray(filters.modele) && filters.modele.includes(modele)}
+                    onChange={() => handleCheckboxChange('modele', modele)}
+                    className="rounded border-gray-300"
+                  />
+                  <span className="text-sm">{modele}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Prix */}
         <div>
           <h3 className="font-semibold mb-3">Prix</h3>
@@ -117,6 +171,25 @@ export function VehicleFilters({ vehicles, onFilterChange }: VehicleFiltersProps
               placeholder="Max"
               value={filters.prix_max}
               onChange={(e) => handleInputChange('prix_max', e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Kilométrage */}
+        <div>
+          <h3 className="font-semibold mb-3">Kilométrage</h3>
+          <div className="space-y-2">
+            <Input
+              type="number"
+              placeholder="Min"
+              value={filters.km_min}
+              onChange={(e) => handleInputChange('km_min', e.target.value)}
+            />
+            <Input
+              type="number"
+              placeholder="Max"
+              value={filters.km_max}
+              onChange={(e) => handleInputChange('km_max', e.target.value)}
             />
           </div>
         </div>

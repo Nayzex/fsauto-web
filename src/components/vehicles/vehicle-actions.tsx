@@ -34,21 +34,21 @@ export function VehicleActions({ vehicleTitle }: VehicleActionsProps) {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <Button onClick={handleCall} className="w-full" size="lg">
-        <Phone className="h-5 w-5" />
-        Appeler
+      <Button onClick={handleCall} className="w-full flex items-center justify-center gap-2" size="lg">
+        <Phone className="h-4 w-4 flex-shrink-0" />
+        <span>Appeler</span>
       </Button>
-      <Button onClick={handleEmail} variant="outline" className="w-full" size="lg">
-        <Mail className="h-5 w-5" />
-        E-mail
+      <Button onClick={handleEmail} variant="outline" className="w-full flex items-center justify-center gap-2" size="lg">
+        <Mail className="h-4 w-4 flex-shrink-0" />
+        <span>E-mail</span>
       </Button>
-      <Button onClick={handleTestDrive} variant="outline" className="w-full" size="lg">
-        <Calendar className="h-5 w-5" />
-        Demander un essai
+      <Button onClick={handleTestDrive} variant="outline" className="w-full flex flex-col items-center justify-center gap-1 h-auto py-3" size="lg">
+        <Calendar className="h-4 w-4 flex-shrink-0" />
+        <span className="text-xs leading-tight text-center">Demander un essai</span>
       </Button>
-      <Button onClick={handleTradeIn} variant="outline" className="w-full" size="lg">
-        <RefreshCw className="h-5 w-5" />
-        Obtenir une reprise
+      <Button onClick={handleTradeIn} variant="outline" className="w-full flex flex-col items-center justify-center gap-1 h-auto py-3" size="lg">
+        <RefreshCw className="h-4 w-4 flex-shrink-0" />
+        <span className="text-xs leading-tight text-center">Obtenir une reprise</span>
       </Button>
     </div>
   )

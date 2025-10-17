@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-12 animate-fade-in-down">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Contactez-nous</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Notre équipe est à votre disposition pour répondre à toutes vos questions
@@ -20,20 +20,20 @@ export default function ContactPage() {
 
       <div className="grid lg:grid-cols-2 gap-12">
         {/* Contact Info */}
-        <div className="space-y-6">
-          <Card>
+        <div className="space-y-6 animate-slide-in-left">
+          <Card className="group hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <CardHeader>
               <CardTitle>Informations de contact</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-start gap-4">
-                <div className="rounded-lg bg-primary/10 p-3">
+              <div className="flex items-start gap-4 group/item">
+                <div className="rounded-lg bg-primary/10 p-3 group-hover/item:bg-primary/20 transition-all group-hover/item:scale-110">
                   <MapPin className="h-6 w-6 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Adresse</h3>
                   <p className="text-muted-foreground">
-                    123 Rue de Bourgogne<br />
+                    9039 Bd du Champ Bossu<br />
                     71600 Paray-le-Monial
                   </p>
                 </div>
@@ -79,18 +79,25 @@ export default function ContactPage() {
             </CardContent>
           </Card>
 
-          {/* Map placeholder */}
-          <Card>
-            <CardContent className="p-0">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                <p className="text-muted-foreground">Carte Google Maps</p>
-              </div>
+          {/* Google Maps */}
+          <Card className="hover:shadow-xl transition-all duration-300 animate-fade-in animate-delay-200">
+            <CardContent className="p-0 overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2751.8!2d4.1176!3d46.4533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4fb8c8c8c8c8c%3A0x8c8c8c8c8c8c8c8c!2s9039%20Bd%20du%20Champ%20Bossu%2C%2071600%20Paray-le-Monial!5e0!3m2!1sfr!2sfr!4v1234567890"
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-lg"
+              />
             </CardContent>
           </Card>
         </div>
 
         {/* Contact Form */}
-        <Card>
+        <Card className="animate-slide-in-right hover:shadow-xl transition-all duration-300">
           <CardHeader>
             <CardTitle>Envoyez-nous un message</CardTitle>
           </CardHeader>
@@ -175,8 +182,9 @@ export default function ContactPage() {
                 </label>
               </div>
 
-              <Button type="submit" className="w-full">
-                Envoyer le message
+              <Button type="submit" className="w-full relative overflow-hidden group hover:shadow-lg hover:shadow-primary/50 transition-all">
+                <span className="relative z-10">Envoyer le message</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
               </Button>
             </form>
           </CardContent>
