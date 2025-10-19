@@ -2,19 +2,22 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, Phone, User, Moon, Sun } from 'lucide-react'
+import { Search, Phone, Moon, Sun, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LinkButton } from '@/components/ui/link-button'
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from '@/components/theme-provider'
+import { useUserRole } from '@/hooks/use-user-role'
+import { UserMenu } from './user-menu'
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState('')
   const router = useRouter()
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
+  const { isStaff, isAdmin } = useUserRole()
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,10 +53,16 @@ export function Header() {
               <Phone className="h-4 w-4" />
               <span>06 41 16 47 46</span>
             </a>
-            <Link href="/admin/login" className="flex items-center gap-2 hover:text-primary transition-colors">
-              <User className="h-4 w-4" />
-              <span>Mon compte</span>
-            </Link>
+
+            {/* Badge admin/staff */}
+            {isStaff && (
+              <Link href="/admin" className="flex items-center gap-1 bg-primary/20 hover:bg-primary/30 text-primary px-2 py-1 rounded transition-colors">
+                <Shield className="h-3 w-3" />
+                <span className="text-xs font-medium">{isAdmin ? 'Admin' : 'Staff'}</span>
+              </Link>
+            )}
+
+            <UserMenu />
           </div>
         </div>
       </div>
