@@ -44,11 +44,8 @@ export async function POST(request: Request) {
   })
 
   if (error) {
-    console.error('[set-session] Erreur:', error)
     return NextResponse.json({ error: error.message }, { status: 400 })
   }
-
-  console.log('[set-session] Session définie pour user:', data.user?.id)
 
   return NextResponse.json({ success: true })
 }

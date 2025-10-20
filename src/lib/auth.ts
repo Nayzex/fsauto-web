@@ -14,11 +14,8 @@ export async function getProfileRole(): Promise<UserRole> {
     const { data: { user }, error: userError } = await supabase.auth.getUser()
 
     if (userError || !user) {
-      console.log('[getProfileRole] Pas d\'utilisateur. Error:', userError?.message)
       return null
     }
-
-    console.log('[getProfileRole] Utilisateur trouvé:', user.id)
 
     // Appeler la RPC me_role()
     const { data, error } = await supabase.rpc('me_role')
@@ -28,7 +25,6 @@ export async function getProfileRole(): Promise<UserRole> {
       return null
     }
 
-    console.log('[getProfileRole] Rôle récupéré:', data)
     return data as UserRole
   } catch (error) {
     console.error('[getProfileRole] Erreur:', error)

@@ -40,22 +40,44 @@ export function UserMenu() {
   const handleLogout = async () => {
     setIsLoggingOut(true)
     try {
+      // 1. Déconnexion côté client (localStorage)
       const { error } = await supabase.auth.signOut()
       if (error) throw error
 
+      // 2. Déconnexion côté serveur (cookies HTTP-only)
+      await fetch('/api/auth/logout', {
+        method: 'POST'
+      })
+
       toast.success('Déconnexion réussie')
-      router.push('/')
-      router.refresh()
+
+      // Attendre un peu pour que le toast s'affiche
+      await new Promise(resolve => setTimeout(resolve, 500))
+
+      // Navigation complète pour nettoyer tout l'état
+      window.location.href = '/'
     } catch (error) {
       console.error('Erreur lors de la déconnexion:', error)
       toast.error('Erreur lors de la déconnexion')
-    } finally {
       setIsLoggingOut(false)
     }
   }
 
-  // Si pas connecté ou en cours de chargement, afficher un simple lien de connexion
-  if (loading || !role) {
+  // Pendant le chargement, afficher un lien simple sans indicateur
+  if (loading) {
+    return (
+      <Link
+        href="/admin/login"
+        className="flex items-center gap-2 hover:text-primary transition-colors"
+      >
+        <User className="h-4 w-4" />
+        <span>Mon compte</span>
+      </Link>
+    )
+  }
+
+  // Si pas connecté (après chargement), afficher le point rouge
+  if (!role) {
     return (
       <Link
         href="/admin/login"

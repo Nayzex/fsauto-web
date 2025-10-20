@@ -26,8 +26,6 @@ export default function LoginPage() {
         return
       }
 
-      console.log('[Login] Connexion réussie, session:', authData.session)
-
       // 2. Définir la session côté serveur via API route
       const response = await fetch('/api/auth/set-session', {
         method: 'POST',
@@ -44,24 +42,19 @@ export default function LoginPage() {
         throw new Error('Erreur lors de la définition de la session serveur')
       }
 
-      console.log('[Login] Session serveur définie')
-
       // 3. Vérifier le rôle
       const { data: roleData } = await supabase.rpc('me_role')
 
       toast.success('Connecté')
-      console.log('[Login] Rôle détecté:', roleData)
 
       // 4. Rediriger selon le rôle avec navigation complète
       if (roleData === 'admin' || roleData === 'vendeur') {
-        console.log('[Login] Redirection vers /admin')
         window.location.href = '/admin'
       } else {
-        console.log('[Login] Redirection vers /')
         window.location.href = '/'
       }
     } catch (error) {
-      console.error('[Login] Erreur de connexion:', error)
+      console.error('Erreur de connexion:', error)
       toast.error('Erreur lors de la connexion')
       setLoading(false)
     }

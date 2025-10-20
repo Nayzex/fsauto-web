@@ -30,12 +30,7 @@ export async function middleware(request: NextRequest) {
   )
 
   // IMPORTANT : Cette ligne rafraîchit la session et met à jour les cookies
-  const { data: { user }, error } = await supabase.auth.getUser()
-
-  // Log pour déboguer
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    console.log('[Middleware] Path:', request.nextUrl.pathname, 'User:', user?.id, 'Error:', error)
-  }
+  await supabase.auth.getUser()
 
   return response
 }
