@@ -42,13 +42,20 @@ export default async function UsersPage() {
 
   // Récupérer la liste des utilisateurs via RPC
   const supabase = getSupabaseServer()
-  const { data: users, error } = await supabase.rpc('admin_list_users')
+  const { data: users, error } = await supabase.rpc('admin_list_profiles')
 
   if (error) {
     console.error('Erreur lors de la récupération des utilisateurs:', error)
   }
 
-  const usersList = (users || []) as User[]
+  const usersList: User[] = (users || []).map(user => ({
+    id: user.id,
+    email: user.email || '',
+    display_name: null,
+    role: user.role as 'admin' | 'vendeur' | 'client',
+    created_at: user.created_at || new Date().toISOString(),
+    last_sign_in_at: null
+  }))
 
   return (
     <main className="container mx-auto px-4 py-8">

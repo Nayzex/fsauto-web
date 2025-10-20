@@ -145,7 +145,7 @@ export function UserMenu() {
         )}
 
         <DropdownMenuItem asChild>
-          <Link href="/admin/mon-compte" className="flex items-center gap-2 cursor-pointer">
+          <Link href="/mon-compte" className="flex items-center gap-2 cursor-pointer">
             <Settings className="h-4 w-4" />
             <span>Paramètres du compte</span>
           </Link>
