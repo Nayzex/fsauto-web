@@ -20,6 +20,13 @@ interface User {
   last_sign_in_at: string | null
 }
 
+interface ProfileFromRPC {
+  id: string
+  email: string | null
+  role: string
+  created_at: string
+}
+
 export default async function UsersPage() {
   const role = await getProfileRole()
 
@@ -48,7 +55,7 @@ export default async function UsersPage() {
     console.error('Erreur lors de la récupération des utilisateurs:', error)
   }
 
-  const usersList: User[] = (users || []).map(user => ({
+  const usersList: User[] = (users || []).map((user: ProfileFromRPC) => ({
     id: user.id,
     email: user.email || '',
     display_name: null,
