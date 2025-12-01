@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { LinkButton } from '@/components/ui/link-button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { VehicleGallery } from '@/components/vehicles/vehicle-gallery'
 import { VehicleSpecs } from '@/components/vehicles/vehicle-specs'
 import { VehicleActions } from '@/components/vehicles/vehicle-actions'
 import { VehicleCard } from '@/components/vehicles/vehicle-card'
+import { VehicleContactForm } from '@/components/forms/vehicle-contact-form'
 import { getSupabaseServer } from '@/lib/supabaseServer'
 import type { Vehicle } from '@/lib/types/vehicle'
 import { ChevronLeft } from 'lucide-react'
@@ -179,56 +179,7 @@ export default async function VehicleDetailPage({ params }: PageProps) {
               <CardTitle>Contactez-nous</CardTitle>
             </CardHeader>
             <CardContent>
-              <form className="space-y-4">
-                <div>
-                  <label htmlFor="nom" className="block text-sm font-medium mb-1">
-                    Nom *
-                  </label>
-                  <input
-                    type="text"
-                    id="nom"
-                    required
-                    className="w-full rounded-lg border border-border px-3 py-2"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    required
-                    className="w-full rounded-lg border border-border px-3 py-2"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="tel" className="block text-sm font-medium mb-1">
-                    Téléphone *
-                  </label>
-                  <input
-                    type="tel"
-                    id="tel"
-                    required
-                    className="w-full rounded-lg border border-border px-3 py-2"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-1">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={4}
-                    className="w-full rounded-lg border border-border px-3 py-2"
-                    placeholder="J'accepte de recevoir des offres et informations de FSauto."
-                  />
-                </div>
-                <Button type="submit" className="w-full relative overflow-hidden group hover:shadow-lg hover:shadow-primary/50 transition-all">
-                  <span className="relative z-10">Envoyer</span>
-                  <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                </Button>
-              </form>
+              <VehicleContactForm vehicleTitle={vehicleTitle} />
             </CardContent>
           </Card>
         </div>
