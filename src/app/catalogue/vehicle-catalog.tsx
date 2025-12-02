@@ -8,7 +8,7 @@ import { Select } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabaseClient'
 import type { Vehicle } from '@/lib/types/vehicle'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, SlidersHorizontal, X } from 'lucide-react'
 
 const ITEMS_PER_PAGE = 12
 
@@ -21,6 +21,7 @@ export function VehicleCatalog() {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [sortBy, setSortBy] = useState('date_desc')
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   // Fetch vehicles
   useEffect(() => {
@@ -157,14 +158,60 @@ export function VehicleCatalog() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
-      {/* Filters sidebar */}
-      <aside className="lg:w-64 flex-shrink-0">
+      {/* Desktop Filters sidebar */}
+      <aside className="hidden lg:block lg:w-64 flex-shrink-0">
         <VehicleFilters
           vehicles={vehicles}
           onFilterChange={handleFilterChange}
           initialSearch={searchQuery}
         />
       </aside>
+
+      {/* Mobile filter button - sticky */}
+      <Button
+        onClick={() => setMobileFiltersOpen(true)}
+        className="lg:hidden fixed bottom-6 left-6 z-40 shadow-lg rounded-full w-14 h-14 p-0"
+        aria-label="Ouvrir les filtres"
+      >
+        <SlidersHorizontal className="h-6 w-6" />
+      </Button>
+
+      {/* Mobile Filters - Sidebar with overlay */}
+      {mobileFiltersOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="lg:hidden fixed inset-0 bg-black/50 z-50 animate-fade-in"
+            onClick={() => setMobileFiltersOpen(false)}
+          />
+
+          {/* Sidebar */}
+          <aside className="lg:hidden fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-background z-[60] overflow-y-auto shadow-xl animate-slide-in-left">
+            {/* Header */}
+            <div className="sticky top-0 bg-background border-b border-border px-4 py-3 flex items-center justify-between">
+              <h2 className="text-lg font-semibold">Filtres</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setMobileFiltersOpen(false)}
+                aria-label="Fermer les filtres"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+
+            {/* Filters content */}
+            <div className="p-4">
+              <VehicleFilters
+                vehicles={vehicles}
+                onFilterChange={handleFilterChange}
+                initialSearch={searchQuery}
+                isMobile={true}
+              />
+            </div>
+          </aside>
+        </>
+      )}
 
       {/* Main content */}
       <div className="flex-1">

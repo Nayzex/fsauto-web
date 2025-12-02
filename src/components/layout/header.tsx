@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, Phone, Moon, Sun, Shield } from 'lucide-react'
+import { Search, Phone, Moon, Sun, Shield, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LinkButton } from '@/components/ui/link-button'
 import { Input } from '@/components/ui/input'
@@ -14,10 +14,20 @@ import { UserMenu } from './user-menu'
 
 export function Header() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuClosing, setMobileMenuClosing] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const { isStaff, isAdmin } = useUserRole()
+
+  const closeMobileMenu = () => {
+    setMobileMenuClosing(true)
+    setTimeout(() => {
+      setMobileMenuOpen(false)
+      setMobileMenuClosing(false)
+    }, 300) // Durée de l'animation
+  }
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
@@ -173,24 +183,35 @@ export function Header() {
             <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </LinkButton>
 
-          {/* Mobile menu button */}
-          <Button variant="ghost" size="icon" className="md:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          {/* Mobile menu button - positioned to the right */}
+          <div className="md:hidden ml-auto">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => mobileMenuOpen ? closeMobileMenu() : setMobileMenuOpen(true)}
+              aria-label="Menu"
             >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-          </Button>
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="4" x2="20" y1="12" y2="12" />
+                  <line x1="4" x2="20" y1="6" y2="6" />
+                  <line x1="4" x2="20" y1="18" y2="18" />
+                </svg>
+              )}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile search */}
@@ -207,6 +228,68 @@ export function Header() {
           </div>
         </form>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className={`md:hidden border-t border-border bg-background ${mobileMenuClosing ? 'animate-fade-out' : 'animate-fade-in'}`}>
+          <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
+            <Link
+              href="/"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/' ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Accueil
+            </Link>
+            <Link
+              href="/catalogue"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/catalogue' || pathname?.startsWith('/voitures/') ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Nos véhicules
+            </Link>
+            <Link
+              href="/services"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/services' ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Nos services
+            </Link>
+            <Link
+              href="/financement"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/financement' ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Financement
+            </Link>
+            <Link
+              href="/reprise"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/reprise' ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Reprise
+            </Link>
+            <Link
+              href="/contact"
+              onClick={closeMobileMenu}
+              className={`text-base font-medium transition-colors py-2 ${
+                pathname === '/contact' ? 'text-primary' : 'hover:text-primary'
+              }`}
+            >
+              Contact
+            </Link>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

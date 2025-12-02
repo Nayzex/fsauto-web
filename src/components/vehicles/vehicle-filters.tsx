@@ -11,9 +11,10 @@ interface VehicleFiltersProps {
   vehicles: Vehicle[]
   onFilterChange: (filters: Record<string, string[] | number | string | undefined>) => void
   initialSearch?: string | null
+  isMobile?: boolean
 }
 
-export function VehicleFilters({ vehicles, onFilterChange, initialSearch }: VehicleFiltersProps) {
+export function VehicleFilters({ vehicles, onFilterChange, initialSearch, isMobile = false }: VehicleFiltersProps) {
   const [filters, setFilters] = useState<Record<string, string[] | number | string | undefined>>({
     marque: [],
     modele: [],
@@ -98,21 +99,8 @@ export function VehicleFilters({ vehicles, onFilterChange, initialSearch }: Vehi
     onFilterChange(filters)
   }, [filters])
 
-  return (
-    <Card className="sticky top-20">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Filtres</CardTitle>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleReset}
-          className="h-8 px-2 text-xs"
-        >
-          <X className="h-4 w-4 mr-1" />
-          Réinitialiser
-        </Button>
-      </CardHeader>
-      <CardContent className="space-y-6">
+  const filtersContent = (
+    <div className="space-y-6">
         {/* Marque */}
         {uniqueMarques.length > 0 && (
           <div>
@@ -270,6 +258,45 @@ export function VehicleFilters({ vehicles, onFilterChange, initialSearch }: Vehi
             ))}
           </div>
         </div>
+    </div>
+  )
+
+  if (isMobile) {
+    return (
+      <>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold">Filtrer les résultats</h3>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleReset}
+            className="h-8 px-2 text-xs"
+          >
+            <X className="h-4 w-4 mr-1" />
+            Réinitialiser
+          </Button>
+        </div>
+        {filtersContent}
+      </>
+    )
+  }
+
+  return (
+    <Card className="sticky top-20">
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Filtres</CardTitle>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleReset}
+          className="h-8 px-2 text-xs"
+        >
+          <X className="h-4 w-4 mr-1" />
+          Réinitialiser
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {filtersContent}
       </CardContent>
     </Card>
   )

@@ -50,10 +50,12 @@ export default function ServicesPage() {
                 <span>Climatisation et chauffage</span>
               </li>
             </ul>
-            <LinkButton href="/contact" className="relative overflow-hidden group hover:scale-105 transition-all">
-              <span className="relative z-10">Prendre rendez-vous</span>
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </LinkButton>
+            <div className="flex sm:block">
+              <LinkButton href="/contact" className="relative overflow-hidden group hover:scale-105 transition-all w-full sm:w-auto">
+                <span className="relative z-10">Prendre rendez-vous</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              </LinkButton>
+            </div>
           </div>
           <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group hover:shadow-xl transition-all duration-300">
             <Image
@@ -109,10 +111,12 @@ export default function ServicesPage() {
                 <span>Tous types de véhicules acceptés</span>
               </li>
             </ul>
-            <LinkButton href="/reprise" className="relative overflow-hidden group hover:scale-105 transition-all">
-              <span className="relative z-10">Obtenir une estimation</span>
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </LinkButton>
+            <div className="flex sm:block">
+              <LinkButton href="/reprise" className="relative overflow-hidden group hover:scale-105 transition-all w-full sm:w-auto">
+                <span className="relative z-10">Obtenir une estimation</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              </LinkButton>
+            </div>
           </div>
         </div>
       </section>
@@ -149,10 +153,12 @@ export default function ServicesPage() {
                 <span>Véhicule de remplacement en cas de panne</span>
               </li>
             </ul>
-            <LinkButton href="/contact" className="relative overflow-hidden group hover:scale-105 transition-all">
-              <span className="relative z-10">En savoir plus</span>
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            </LinkButton>
+            <div className="flex sm:block">
+              <LinkButton href="/contact" className="relative overflow-hidden group hover:scale-105 transition-all w-full sm:w-auto">
+                <span className="relative z-10">En savoir plus</span>
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              </LinkButton>
+            </div>
           </div>
           <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group hover:shadow-xl transition-all duration-300">
             <Image
@@ -169,16 +175,18 @@ export default function ServicesPage() {
       <SectionDivider className="my-16" />
 
       {/* Financing CTA */}
-      <section className="bg-primary text-primary-foreground rounded-lg p-12 text-center animate-scale-in hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300">
-        <h2 className="text-3xl font-bold mb-4">Solutions de financement sur mesure</h2>
-        <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+      <section className="bg-primary text-primary-foreground rounded-lg p-6 sm:p-12 text-center animate-scale-in hover:shadow-2xl hover:shadow-primary/50 transition-all duration-300">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-4">Solutions de financement sur mesure</h2>
+        <p className="text-base sm:text-lg mb-8 opacity-90 max-w-2xl mx-auto">
           Nous proposons des options de financement flexibles adaptées à votre budget. Location avec option d'achat (LOA),
           crédit auto classique, ou paiement comptant - nous travaillons avec vous pour trouver la meilleure solution.
         </p>
-        <LinkButton href="/financement" size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all relative overflow-hidden group">
-          <span className="relative z-10">Découvrir nos offres de financement</span>
-          <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
-        </LinkButton>
+        <div className="flex justify-center">
+          <LinkButton href="/financement" size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90 hover:scale-105 transition-all relative overflow-hidden group w-full sm:w-auto">
+            <span className="relative z-10">Découvrir nos offres de financement</span>
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+          </LinkButton>
+        </div>
       </section>
     </div>
   )
