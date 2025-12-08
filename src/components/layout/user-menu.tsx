@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { User, Shield, LayoutDashboard, Settings, LogOut, Mail } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
-import { useUserRole } from '@/hooks/use-user-role'
+import { useUserRole } from '@/features/auth/hooks/use-user-role'
 import {
   DropdownMenu,
   DropdownMenuContent,

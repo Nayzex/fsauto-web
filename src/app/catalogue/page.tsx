@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { VehicleCatalog } from './vehicle-catalog'
+import { VehicleCatalog } from '@/features/catalogue/components/vehicle-catalog'
 
 export const metadata = {
   title: 'Catalogue de véhicules d\'occasion - FSauto',

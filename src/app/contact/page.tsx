@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Phone, Mail, MapPin, Clock } from 'lucide-react'
-import { ContactForm } from '@/components/forms/contact-form'
+import { ContactForm } from '@/features/contact/components/contact-form'
 
 export const metadata = {
   title: 'Contact - FSauto',

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { submitContactForm } from '@/app/actions/contact'
+import { submitContactForm } from '../actions/contact'
 import { toast } from 'sonner'
 
 export function ContactForm() {

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { submitRepriseForm } from '@/app/actions/contact'
+import { submitRepriseForm } from '@/features/contact/actions/contact'
 import { toast } from 'sonner'
 
 export function RepriseForm() {

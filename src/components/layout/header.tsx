@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useTheme } from '@/components/theme-provider'
-import { useUserRole } from '@/hooks/use-user-role'
+import { useUserRole } from '@/features/auth/hooks/use-user-role'
 import { UserMenu } from './user-menu'
 
 export function Header() {

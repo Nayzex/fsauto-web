@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CheckCircle, FileText, Calculator, Car } from 'lucide-react'
-import { RepriseForm } from '@/components/forms/reprise-form'
+import { RepriseForm } from '@/features/reprise/components/reprise-form'
 
 export const metadata = {
   title: 'Reprise de véhicule - FSauto',

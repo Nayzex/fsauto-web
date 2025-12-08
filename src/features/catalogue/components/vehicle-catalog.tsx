@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { VehicleCard } from '@/components/vehicles/vehicle-card'
-import { VehicleFilters } from '@/components/vehicles/vehicle-filters'
+import { VehicleCard } from './vehicle-card'
+import { VehicleFilters } from './vehicle-filters'
 import { Select } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
 import { supabase } from '@/lib/supabaseClient'

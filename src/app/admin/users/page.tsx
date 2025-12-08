@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation'
 import { getProfileRole } from '@/lib/auth'
 import { getSupabaseServer } from '@/lib/supabaseServer'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { UserRoleManager } from './user-role-manager'
+import { UserRoleManager } from '@/features/admin/components/user-role-manager'
 import { ChevronLeft } from 'lucide-react'
 import { LinkButton } from '@/components/ui/link-button'
 

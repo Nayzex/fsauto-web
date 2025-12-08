@@ -25,7 +25,7 @@ export function VehicleContactForm({ vehicleTitle }: { vehicleTitle: string }) {
 
     try {
       // Import the server action
-      const { submitContactForm } = await import('@/app/actions/contact')
+      const { submitContactForm } = await import('../actions/contact')
       const result = await submitContactForm(data)
 
       if (result.success) {

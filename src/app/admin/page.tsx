@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { getProfileRole } from '@/lib/auth'
 import { getSupabaseServer } from '@/lib/supabaseServer'
-import { LogoutButton } from './logout-button'
+import { LogoutButton } from '@/features/auth/components/logout-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { LinkButton } from '@/components/ui/link-button'
 import { Car, Users, FileText, Settings } from 'lucide-react'

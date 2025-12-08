@@ -1,6 +1,6 @@
 import { LinkButton } from '@/components/ui/link-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { VehicleCard } from '@/components/vehicles/vehicle-card'
+import { VehicleCard } from '@/features/catalogue/components/vehicle-card'
 import { getSupabaseServer } from '@/lib/supabaseServer'
 import type { Vehicle } from '@/lib/types/vehicle'
 import { ArrowRight, Wrench, RefreshCw, Shield, Star } from 'lucide-react'
