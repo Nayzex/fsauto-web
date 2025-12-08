@@ -19,6 +19,7 @@ export function Footer() {
                 height={33}
                 className="h-8 w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(1)' }}
+                unoptimized={true}
               />
               <span className="text-lg font-bold">FSauto</span>
             </div>

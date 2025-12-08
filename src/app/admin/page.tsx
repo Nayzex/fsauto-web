@@ -4,7 +4,7 @@ import { getSupabaseServer } from '@/lib/supabaseServer'
 import { LogoutButton } from './logout-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { LinkButton } from '@/components/ui/link-button'
-import { Car, Users, FileText, Settings, BarChart3 } from 'lucide-react'
+import { Car, Users, FileText, Settings } from 'lucide-react'
 
 export default async function AdminHome() {
   const role = await getProfileRole()

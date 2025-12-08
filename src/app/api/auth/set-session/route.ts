@@ -38,7 +38,7 @@ export async function POST(request: Request) {
   )
 
   // Définir la session côté serveur
-  const { data, error } = await supabase.auth.setSession({
+  const { error } = await supabase.auth.setSession({
     access_token,
     refresh_token,
   })

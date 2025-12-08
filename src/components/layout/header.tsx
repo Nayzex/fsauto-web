@@ -89,6 +89,7 @@ export function Header() {
               height={40}
               className="h-10 w-auto"
               priority
+              unoptimized={true}
             />
             <span className="text-xl font-bold whitespace-nowrap">FSauto</span>
           </Link>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { User, Shield, LayoutDashboard, Settings, LogOut, Mail } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
 import { useUserRole } from '@/hooks/use-user-role'
@@ -18,10 +17,9 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
 export function UserMenu() {
-  const { role, loading, isStaff, isAdmin } = useUserRole()
+  const { role, loading, isStaff } = useUserRole()
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const [userEmail, setUserEmail] = useState<string | null>(null)
-  const router = useRouter()
 
   // Récupérer l'email de l'utilisateur
   useEffect(() => {

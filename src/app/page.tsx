@@ -1,6 +1,5 @@
 import { LinkButton } from '@/components/ui/link-button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { SectionDivider } from '@/components/ui/section-divider'
 import { VehicleCard } from '@/components/vehicles/vehicle-card'
 import { getSupabaseServer } from '@/lib/supabaseServer'
 import type { Vehicle } from '@/lib/types/vehicle'

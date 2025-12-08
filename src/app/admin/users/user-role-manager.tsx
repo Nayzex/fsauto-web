@@ -27,7 +27,7 @@ export function UserRoleManager({ user }: UserRoleManagerProps) {
     setLoading(true)
 
     try {
-      const { data, error } = await supabase.rpc('admin_update_role', {
+      const { error } = await supabase.rpc('admin_update_role', {
         target_uid: user.id,
         new_role: newRole,
       })
